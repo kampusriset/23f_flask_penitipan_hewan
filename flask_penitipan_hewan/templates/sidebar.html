@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo">🐾</div>
+            <h2>PetCare Board</h2>
+            <p class="small">Manajemen Penitipan</p>
+        </div>
+
+        <nav class="menu">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('reservasi') }}">Reservasi</a>
+            <a href="{{ url_for('data_hewan') }}">Data Hewan</a>
+            <a href="{{ url_for('data_pemilik') }}">Data Pemilik</a>
+            <a href="{{ url_for('pengaturan') }}">Pengaturan</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="user">👤 {{ session['username'] }}</div>
+            <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="main">
+    </div>
+</div>

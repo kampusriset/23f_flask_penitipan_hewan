@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title if title else "Pet Care" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="layout-wrapper">
+
+    {% include "sidebar.html" %}
+
+    <div class="main-wrapper">
+
+        <header class="topbar-new">
+            <h1 class="topbar-title-new">
+                {{ page_title if page_title else "Welcome!" }}
+            </h1>
+
+            <div class="topbar-user">
+                <span class="date-text">{{ today }}</span>
+                <img src="{{ url_for('static', filename='images/user.png') }}" class="user-img">
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            {% block content %}{% endblock %}
+        </div>
+
+    </div>
+
+</body>
+</html>

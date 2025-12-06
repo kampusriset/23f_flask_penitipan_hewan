@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ mode }} Reservasi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>{{ mode }} Reservasi</h1>
+        </header>
+
+        <form method="POST" class="form-box">
+
+            <label>Nama Pemilik</label>
+            <input type="text" name="pemilik" required value="{{ data.pemilik if data else '' }}">
+
+            <label>Nama Hewan</label>
+            <input type="text" name="nama_hewan" required value="{{ data.nama_hewan if data else '' }}">
+
+            <label>Tanggal Check-in</label>
+            <input type="date" name="checkin" required value="{{ data.check_in if data else '' }}">
+
+            <label>Tanggal Check-out</label>
+            <input type="date" name="checkout" required value="{{ data.check_out if data else '' }}">
+
+            <button class="btn-primary">Simpan</button>
+        </form>
+
+    </div>
+
+</body>
+</html>

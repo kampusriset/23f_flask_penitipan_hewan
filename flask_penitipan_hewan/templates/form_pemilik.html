@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ mode }} Pemilik</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>{{ mode }} Pemilik</h1>
+        </header>
+
+        <form method="POST" class="form-box">
+
+            <label>Nama Pemilik</label>
+            <input type="text" name="nama" required value="{{ data.nama if data else '' }}">
+
+            <label>No. Telp</label>
+            <input type="text" name="telp" required value="{{ data.telp if data else '' }}">
+
+            <label>Alamat</label>
+            <textarea name="alamat" required>{{ data.alamat if data else '' }}</textarea>
+
+            <button class="btn-primary">Simpan</button>
+        </form>
+
+    </div>
+</body>
+</html>

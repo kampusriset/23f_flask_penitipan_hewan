@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Hewan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>Data Hewan</h1>
+        </header>
+
+        <section class="table-wrap">
+            <h2>Daftar Hewan Dititipkan</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Hewan</th>
+                        <th>Jenis</th>
+                        <th>Nama Pemilik</th>
+                        <th>Tanggal Masuk</th>
+                        <th>Tanggal Keluar</th>
+                        <th>Status</th>
+                        <th>Aksi</th> 
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if data %}
+                        {% for h in data %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ h.nama_hewan }}</td>
+                            <td>{{ h.jenis }}</td>
+                            <td>{{ h.pemilik }}</td>
+                            <td>{{ h.check_in }}</td>
+                            <td>{{ h.check_out }}</td>
+                            <td>
+                                {% if h.status == "Dirawat" %}
+                                    <span class="badge badge-blue">Dirawat</span>
+                                {% elif h.status == "Selesai" %}
+                                    <span class="badge badge-green">Selesai</span>
+                                {% else %}
+                                    <span class="badge badge-gray">{{ h.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('hapus_hewan', id=h.id) }}" class="btn-red" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="empty-msg">Belum ada data hewan.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

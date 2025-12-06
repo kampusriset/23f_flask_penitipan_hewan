@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pengaturan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="dashboard-bg">
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+        <header class="topbar">
+            <h1>Pengaturan</h1>
+        </header>
+
+        <section class="table-wrap">
+            <h2>Ubah Tema</h2>
+            <form method="POST">
+                <input type="hidden" name="action" value="ubah_tema">
+                <select name="tema">
+                    <option value="pink" {% if session.get('tema')=='pink' %}selected{% endif %}>Pink</option>
+                    <option value="ungu" {% if session.get('tema')=='ungu' %}selected{% endif %}>Ungu</option>
+                    <option value="biru" {% if session.get('tema')=='biru' %}selected{% endif %}>Biru</option>
+                </select>
+                <button type="submit" class="btn-primary">Simpan Tema</button>
+            </form>
+        </section>
+
+        <section class="table-wrap">
+            <h2>Ganti Password</h2>
+            <form method="POST">
+                <input type="hidden" name="action" value="ganti_password">
+                <label>Password Lama</label>
+                <input type="password" name="old_password" required>
+                <label>Password Baru</label>
+                <input type="password" name="new_password" required>
+                <button type="submit" class="btn-primary">Ganti Password</button>
+            </form>
+        </section>
+
+        <section class="table-wrap">
+            <h2>Hapus Akun</h2>
+            <form method="POST" onsubmit="return confirm('Yakin ingin menghapus akun dan semua data?');">
+                <input type="hidden" name="action" value="hapus_akun">
+                <button type="submit" class="btn-delete">Hapus Akun</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

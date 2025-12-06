@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Pemilik</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>Data Pemilik Hewan</h1>
+        </header>
+
+        <section class="table-wrap">
+            <h2>Daftar Pemilik</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Pemilik</th>
+                        <th>Telepon</th>
+                        <th>Alamat</th>
+                        <th>Aksi</th> 
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if data %}
+                        {% for p in data %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ p.nama }}</td>
+                            <td>{{ p.telepon }}</td>
+                            <td>{{ p.alamat }}</td>
+                            <td>
+                                <a href="{{ url_for('hapus_pemilik', id=p.id) }}" class="btn-red" onclick="return confirm('Yakin ingin menghapus pemilik ini beserta semua hewannya?')">Hapus</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="empty-msg">Belum ada data pemilik.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

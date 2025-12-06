@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservasi Penitipan Hewan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>Reservasi Penitipan Hewan</h1>
+        </header>
+
+        <div class="form-card">
+
+            <form method="POST" class="form">
+
+                <h2 class="form-title">Form Reservasi</h2>
+
+                <label>Nama Pemilik</label>
+                <input type="text" name="pemilik" required>
+
+                <label>Telepon</label>
+                <input type="text" name="telp" required>
+
+                <label>Alamat</label>
+                <input type="text" name="alamat" required>
+
+                <label>Nama Hewan</label>
+                <input type="text" name="nama_hewan" required>
+
+                <label>Jenis Hewan</label>
+                <input type="text" name="jenis" required>
+
+                <label>Tanggal Masuk</label>
+                <input type="date" name="checkin" required>
+
+                <label>Tanggal Keluar</label>
+                <input type="date" name="checkout" required>
+
+                <label>Catatan</label>
+                <textarea name="catatan" placeholder="Opsional"></textarea>
+
+                <button class="btn-primary" type="submit">Simpan Reservasi</button>
+
+            </form>
+
+        </div>
+
+        <section class="table-wrap">
+            <h2>Daftar Reservasi</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Pemilik</th>
+                        <th>Telepon</th>
+                        <th>Hewan</th>
+                        <th>Jenis</th>
+                        <th>Masuk</th>
+                        <th>Keluar</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if data %}
+                        {% for r in data %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ r.pemilik }}</td>
+                            <td>{{ r.telp }}</td>
+                            <td>{{ r.nama_hewan }}</td>
+                            <td>{{ r.jenis }}</td>
+                            <td>{{ r.check_in }}</td>
+                            <td>{{ r.check_out }}</td>
+                            <td>{{ r.status }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="empty-msg">Belum ada reservasi.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+
+            </table>
+        </section>
+
+    </div>
+
+</body>
+</html>

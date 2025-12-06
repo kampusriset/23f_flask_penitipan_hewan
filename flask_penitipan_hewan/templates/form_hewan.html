@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ mode }} Data Hewan</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+
+        <header class="topbar">
+            <h1>{{ mode }} Hewan</h1>
+        </header>
+
+        <div class="form-card">
+
+            <form method="POST" class="form">
+
+                <label>Nama Hewan</label>
+                <input type="text" name="nama" value="{{ data.nama_hewan if data else '' }}" required>
+
+                <label>Jenis Hewan</label>
+                <input type="text" name="jenis" value="{{ data.jenis if data else '' }}" required>
+
+                <label>Nama Pemilik</label>
+                <input type="text" name="pemilik" value="{{ data.pemilik if data else '' }}" required>
+
+                <label>Kandang</label>
+                <input type="text" name="kandang" value="{{ data.kandang if data else '' }}" required>
+
+                <label>Tanggal Masuk</label>
+                <input type="date" name="checkin" value="{{ data.check_in if data else '' }}" required>
+
+                <label>Tanggal Keluar</label>
+                <input type="date" name="checkout" value="{{ data.check_out if data else '' }}" required>
+
+                <label>Status</label>
+                <select name="status" required>
+                    <option value="Dirawat" {% if data and data.status == "Dirawat" %}selected{% endif %}>Dirawat</option>
+                    <option value="Selesai" {% if data and data.status == "Selesai" %}selected{% endif %}>Selesai</option>
+                    <option value="Menunggu Check-in" {% if data and data.status == "Menunggu Check-in" %}selected{% endif %}>Menunggu Check-in</option>
+                </select>
+
+                <button class="btn-primary" type="submit">{{ mode }}</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

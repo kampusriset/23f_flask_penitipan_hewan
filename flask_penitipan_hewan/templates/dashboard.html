@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WELCOME TO PET CARE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .topbar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+        }
+        
+        .topbar-title {
+            margin: 0 auto;
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c42383, #ff4da6);
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .date {
+            font-size: 14px;
+            color: #7a4568;
+            font-weight: 500;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+
+        .hero-wrapper {
+            width: 100%;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-box-fixed {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 22px;
+            padding: 30px 35px;
+            width: 70%;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 25px;
+        }
+
+        .hero-title {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #c42383, #ff4da6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text {
+            font-size: 16px;
+            color: #6b4a5f;
+            margin-bottom: 18px;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+            padding: 10px 24px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.25s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-image-fixed {
+            width: 100%;
+            max-width: 900px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            display: block;
+        }
+
+        .icon-menu {
+            margin-top: 35px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .icon-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            transition: 0.3s;
+        }
+
+        .icon-card img {
+            width: 46px;
+            margin-bottom: 10px;
+        }
+
+        .icon-card p {
+            margin: 0;
+            font-weight: 600;
+            color: #7a4568;
+        }
+
+        .sorotan {
+            margin-top: 40px;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+        }
+
+        .sorotan-title {
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #b42379, #ff4da6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .sorotan-sub {
+            text-align: center;
+            color: #8a6f82;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .sorotan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .sorotan-card {
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .sorotan-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .sorotan-card-name {
+            text-align: center;
+            font-weight: 600;
+            padding: 8px 0;
+            color: #7a4568;
+        }
+
+        .gallery {
+            margin-top: 40px;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+        }
+
+        .gallery-title {
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #b42379, #ff4da6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .gallery-sub {
+            text-align: center;
+            color: #8a6f82;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .gallery-card video {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+
+        .glow-anim {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+
+        .glow-anim:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 28px rgba(255, 120, 185, 0.45);
+        }
+
+        .glow-anim:active {
+            transform: scale(0.93);
+            box-shadow: 0 0 18px rgba(255, 120, 185, 0.35);
+        }
+    </style>
+</head>
+
+<body class="dashboard-bg">
+
+    {% include 'sidebar.html' %}
+
+    <div class="main">
+        <header class="topbar">
+            <h5 class="topbar-title">WELCOME TO PET CARE</h5>
+            <div class="date">{{ today }}</div>
+        </header>
+
+        <div class="hero-wrapper">
+
+            <div class="hero-box-fixed">
+                <h1 class="hero-title">Rumah Kedua Penuh Cinta</h1>
+
+                <p class="hero-text">
+                    pet care kami tidak hanya untuk penitipan saja, tetapi juga penuh dengan hewan lucu yang menunggu untuk dirawat.
+                    Jadilah orang yang mengubah hidup mereka!
+                </p>
+
+                <a href="{{ url_for('reservasi') }}" class="hero-btn">Reservasi Sekarang</a>
+            </div>
+
+            <img src="{{ url_for('static', filename='images/hero.jpg') }}" class="hero-image-fixed">
+        </div>
+        <section class="icon-menu">
+
+            <div class="icon-card glow-anim">
+                <img src="{{ url_for('static', filename='images/paw.jpg') }}">
+                <p>Adopt a Pet</p>
+            </div>
+
+            <div class="icon-card glow-anim">
+                <img src="{{ url_for('static', filename='images/volunteer.jpg') }}">
+                <p>Volunteer</p>
+            </div>
+
+            <div class="icon-card glow-anim">
+                <img src="{{ url_for('static', filename='images/donate.jpg') }}">
+                <p>Donate</p>
+            </div>
+
+        </section>
+
+        <section class="sorotan">
+            <h2 class="sorotan-title">Our Lovely Pets</h2>
+            <p class="sorotan-sub">Teman-teman kecil yang lucu 💕</p>
+
+            <div class="sorotan-grid">
+                <div class="sorotan-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/pet1.jpg') }}">
+                    <div class="sorotan-card-name">Milo</div>
+                </div>
+
+                <div class="sorotan-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/pet2.jpg') }}">
+                    <div class="sorotan-card-name">Snow</div>
+                </div>
+
+                <div class="sorotan-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/pet3.jpg') }}">
+                    <div class="sorotan-card-name">Citi</div>
+                </div>
+
+                <div class="sorotan-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/pet4.jpg') }}">
+                    <div class="sorotan-card-name">Biscuit</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery">
+            <h2 class="gallery-title">Gallery hewan lucu 💕</h2>
+            <p class="gallery-sub">Happy & healthy pets every day!</p>
+
+            <div class="gallery-grid">
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu1.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu2.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu3.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu4.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu5.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu6.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu7.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu8.jpg') }}">
+                </div>
+
+                <div class="gallery-card glow-anim">
+                    <video src="{{ url_for('static', filename='images/lucu9.mp4') }}" 
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="video-preview">
+                </video>
+            </div>
+
+            <div class="gallery-card glow-anim">
+                    <video src="{{ url_for('static', filename='images/lucu10.mp4') }}" 
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="video-preview">
+                </video>
+            </div>
+
+            <div class="gallery-card glow-anim">
+                    <video src="{{ url_for('static', filename='images/lucu11.mp4') }}" 
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="video-preview">
+                </video>
+            </div>
+
+            <div class="gallery-card glow-anim">
+                    <video src="{{ url_for('static', filename='images/lucu12.mp4') }}" 
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    class="video-preview">
+                </video>
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+
+</html>
