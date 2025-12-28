@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body class="login-bg">
-    <div class="login-card">
+
+    <div class="login-card float-soft">
+
         <div class="brand">
             <div class="logo">🐾</div>
             <div class="brand-text">
@@ -35,6 +38,16 @@
 
             <button type="submit" class="btn-primary">Masuk</button>
         </form>
+
+        <!-- ===== LINK REGISTRASI USER ===== -->
+        <p style="margin-top:18px;font-size:14px;">
+            Belum punya akun?
+            <a href="/register" style="color:#ff4da6;font-weight:600;">
+                Daftar di sini
+            </a>
+        </p>
+
     </div>
+
 </body>
 </html>

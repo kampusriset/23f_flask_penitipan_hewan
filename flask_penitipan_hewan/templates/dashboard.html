@@ -14,8 +14,7 @@
             align-items: center;
             padding: 18px 25px;
             box-sizing: border-box;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
             border-radius: 25px;
             padding: 25px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
@@ -43,6 +42,7 @@
 
         .hero-wrapper {
             width: 100%;
+            gap: 100px;
             margin-top: 30px;
             display: flex;
             flex-direction: column;
@@ -95,7 +95,7 @@
 
         .hero-image-fixed {
             width: 100%;
-            max-width: 900px;
+            max-width: 700px;
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
             display: block;
@@ -106,8 +106,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 20px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
             border-radius: 25px;
             padding: 25px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
@@ -267,6 +266,9 @@
 
         <div class="hero-wrapper">
 
+            <img src="{{ url_for('static', filename='images/hero.jpg') }}"
+            class="hero-image-fixed float-soft">
+
             <div class="hero-box-fixed">
                 <h1 class="hero-title">Rumah Kedua Penuh Cinta</h1>
 
@@ -276,9 +278,7 @@
                 </p>
 
                 <a href="{{ url_for('reservasi') }}" class="hero-btn">Reservasi Sekarang</a>
-            </div>
-
-            <img src="{{ url_for('static', filename='images/hero.jpg') }}" class="hero-image-fixed">
+            </div> 
         </div>
         <section class="icon-menu">
 
@@ -364,24 +364,12 @@
                 </div>
 
                 <div class="gallery-card glow-anim">
-                    <video src="{{ url_for('static', filename='images/lucu9.mp4') }}" 
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    class="video-preview">
-                </video>
-            </div>
+                    <img src="{{ url_for('static', filename='images/lucu9.jpg') }}">
+                </div>
 
-            <div class="gallery-card glow-anim">
-                    <video src="{{ url_for('static', filename='images/lucu10.mp4') }}" 
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    class="video-preview">
-                </video>
-            </div>
+                <div class="gallery-card glow-anim">
+                    <img src="{{ url_for('static', filename='images/lucu10.jpg') }}">
+                </div>
 
             <div class="gallery-card glow-anim">
                     <video src="{{ url_for('static', filename='images/lucu11.mp4') }}" 

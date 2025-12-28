@@ -6,10 +6,12 @@ app = Flask(__name__)
 app.secret_key = "petcare_secret"
 DB = "petcare.db"
 
+
 def get_db_connection():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
+
 
 def init_db():
     conn = get_db_connection()
@@ -48,6 +50,7 @@ def init_db():
 
 init_db()
 
+
 USERNAME = "admin"
 PASSWORD = "admin123"
 
@@ -77,6 +80,8 @@ def logout():
     flash("Anda telah logout.","info")
     return redirect(url_for("login"))
 
+
+
 @app.route("/dashboard")
 def dashboard():
     if "username" not in session:
@@ -101,6 +106,7 @@ def dashboard():
         today=date.today(),
         pelanggan=hewan
     )
+
 
 @app.route("/reservasi", methods=["GET","POST"])
 def reservasi():
@@ -208,6 +214,7 @@ def pengaturan():
         if action=="ubah_tema":
             session["tema"]=request.form.get("tema")
             flash(f"Tema berhasil diubah menjadi {session['tema']}!","success")
+
         elif action=="ganti_password":
             old=request.form.get("old_password")
             new=request.form.get("new_password")
@@ -216,6 +223,7 @@ def pengaturan():
             else:
                 PASSWORD=new
                 flash("Password berhasil diubah!","success")
+                
         elif action=="hapus_akun":
             conn=get_db_connection()
             conn.execute("DELETE FROM reservasi")

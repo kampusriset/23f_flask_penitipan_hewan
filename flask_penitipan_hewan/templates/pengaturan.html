@@ -5,7 +5,7 @@
     <title>Pengaturan</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="dashboard-bg">
+<body class="dashboard-bg theme-{{ session.get('tema', 'pink') }}">
     {% include 'sidebar.html' %}
 
     <div class="main">
@@ -27,16 +27,27 @@
         </section>
 
         <section class="table-wrap">
-            <h2>Ganti Password</h2>
-            <form method="POST">
-                <input type="hidden" name="action" value="ganti_password">
+    <div class="card pengaturan-card">
+        <h3 class="form-title">Ganti Password</h3>
+
+        <form method="POST" class="password-form">
+            <input type="hidden" name="action" value="ganti_password">
+
+            <div class="password-group">
                 <label>Password Lama</label>
                 <input type="password" name="old_password" required>
+            </div>
+
+            <div class="password-group">
                 <label>Password Baru</label>
                 <input type="password" name="new_password" required>
-                <button type="submit" class="btn-primary">Ganti Password</button>
-            </form>
-        </section>
+            </div>
+
+            <button type="submit" class="btn-primary">Ganti Password</button>
+        </form>
+    </div>
+</section>
+
 
         <section class="table-wrap">
             <h2>Hapus Akun</h2>
