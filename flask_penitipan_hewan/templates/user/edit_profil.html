@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profil - PetCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_sidebar.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+{% include 'user/sidebar_user.html' %}
+
+<!-- Main Content -->
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">Edit Profil</h1>
+        <div class="date">{{ today }}</div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="table-wrap">
+        <!-- Profile Container -->
+        <div class="profile-container">
+        
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-avatar">
+                {% if user.avatar %}
+                <img src="{{ user.avatar }}" alt="Avatar">
+                {% else %}
+                👤
+                {% endif %}
+            </div>
+            
+
+
+            <div class="profile-name">{{ user.nama or 'User Name' }}</div>
+            <div class="profile-role">{{ user.email or 'user@email.com' }}</div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">{{ user.total_reservasi or 0 }}</div>
+                    <div class="stat-label">Reservasi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ user.point_loyalti or 0 }}</div>
+                    <div class="stat-label">Point</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
+            <h2>✏️ Edit Informasi Profil</h2>
+
+            <form method="POST" action="{{ url_for('user_profil') }}" enctype="multipart/form-data">
+
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3>Informasi Pribadi</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Nama Lengkap</label>
+                        <input type="text" name="nama" value="{{ user.nama or '' }}" placeholder="Masukkan nama lengkap" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Email</label>
+                            <input type="email" name="email" value="{{ user.email or '' }}" placeholder="nama@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="required">No. Telepon</label>
+                            <input type="tel" name="telp" value="{{ user.telp or '' }}" placeholder="08xxxxxxxxxx" required>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <textarea name="alamat" placeholder="Masukkan alamat lengkap">{{ user.alamat or '' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="form-section">
+                    <h3>Ubah Password</h3>
+                    
+                    <div class="form-group">
+                        <label>Password Lama</label>
+                        <input type="password" name="password_lama" placeholder="Kosongkan jika tidak ingin mengubah password">
+                        <div class="form-hint">Isi hanya jika ingin mengubah password</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password" name="password_baru" placeholder="Masukkan password baru">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <input type="password" name="password_konfirmasi" placeholder="Konfirmasi password baru">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="form-section">
+                    <h3>Informasi Tambahan</h3>
+                    
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea name="bio" placeholder="Ceritakan sedikit tentang Anda dan hewan peliharaan Anda" rows="4">{{ user.bio or '' }}</textarea>
+                        <div class="form-hint">Maksimal 200 karakter</div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">💾 Simpan Perubahan</button>
+                    <a href="{{ url_for('user_dashboard') }}" class="btn-secondary">❌ Batal</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // Password validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const passwordLama = document.querySelector('input[name="password_lama"]').value;
+        const passwordBaru = document.querySelector('input[name="password_baru"]').value;
+        const passwordKonfirmasi = document.querySelector('input[name="password_konfirmasi"]').value;
+
+        // If changing password
+        if (passwordLama || passwordBaru || passwordKonfirmasi) {
+            if (!passwordLama) {
+                e.preventDefault();
+                alert('Masukkan password lama untuk mengubah password!');
+                return;
+            }
+            if (passwordBaru !== passwordKonfirmasi) {
+                e.preventDefault();
+                alert('Password baru dan konfirmasi password tidak cocok!');
+                return;
+            }
+            if (passwordBaru.length < 6) {
+                e.preventDefault();
+                alert('Password baru minimal 6 karakter!');
+                return;
+            }
+        }
+
+        // Bio character limit
+        const bio = document.querySelector('textarea[name="bio"]').value;
+        if (bio.length > 200) {
+            e.preventDefault();
+            alert('Bio maksimal 200 karakter!');
+            return;
+        }
+    });
+
+    // Bio character counter
+    const bioTextarea = document.querySelector('textarea[name="bio"]');
+    const bioHint = bioTextarea.nextElementSibling;
+    
+    bioTextarea.addEventListener('input', function() {
+        const length = this.value.length;
+        bioHint.textContent = `${length}/200 karakter`;
+        
+        if (length > 200) {
+            bioHint.style.color = '#ff4da6';
+            bioHint.style.fontWeight = '700';
+        } else {
+            bioHint.style.color = '';
+            bioHint.style.fontWeight = '';
+        }
+    });
+</script>
+
+</body>
+</html>

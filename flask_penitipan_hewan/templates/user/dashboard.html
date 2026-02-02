@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard User - PetCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_sidebar.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+{% include 'user/sidebar_user.html' %}
+
+<!-- Main Content -->
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">Dashboard User</h1>
+        <div class="date">{{ today }}</div>
+    </header>
+
+    <!-- Statistics Cards -->
+    <section class="counter-section">
+        <div class="counter-card">
+            <h3>Reservasi Aktif</h3>
+            <p>{{ reservasi_aktif or 0 }}</p>
+            <span class="counter-icon">🐾</span>
+        </div>
+
+        <div class="counter-card">
+            <h3>Total Pemesanan</h3>
+            <p>{{ total_pemesanan or 0 }}</p>
+            <span class="counter-icon">📋</span>
+        </div>
+
+        <div class="counter-card">
+            <h3>Pesan Masuk</h3>
+            <p>{{ pesan_masuk or 0 }}</p>
+            <span class="counter-icon">💬</span>
+        </div>
+    </section>
+
+    <!-- Recent Activities -->
+    <section class="recent-section">
+        <h2>📌 Aktivitas Terkini</h2>
+        <div class="activity-list">
+            {% if recent_activities %}
+                {% for activity in recent_activities %}
+                <div class="activity-item">
+                    <div class="activity-icon">{{ activity.icon }}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">{{ activity.title }}</div>
+                        <div class="activity-time">{{ activity.time }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-msg">
+                    Belum ada aktivitas terkini
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>

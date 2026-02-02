@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetCare - Penitipan & Adopsi Hewan Terpercaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="home-page">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <div class="navbar-logo">🐾</div>
+                <div class="navbar-title">PetCare</div>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="/user/pemesanan">Pesan</a></li>
+                {% if session.get('role') == 'admin' %}
+                <li><a href="/admin/dashboard" class="btn-nav">Dashboard</a></li>
+                {% elif session.get('role') == 'user' %}
+                <li><a href="/user/dashboard" class="btn-nav">Dashboard</a></li>
+                {% else %}
+                <li><a href="/login" class="btn-nav">Masuk</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-badge">✨ Platform Terpercaya untuk Hewan Kesayangan Anda</div>
+            <h1 class="hero-title">Tempat Terbaik untuk<br>Hewan Peliharaan Anda</h1>
+            <p class="hero-subtitle">
+                Layanan penitipan, adopsi, dan perawatan hewan terpercaya dengan fasilitas modern dan tim yang berpengalaman. 
+                Kami menjaga hewan kesayangan Anda seperti keluarga sendiri.
+            </p>
+            <div class="hero-buttons">
+                <a href="#layanan" class="btn-hero-primary">Lihat Layanan</a>
+                {% if session.get('role') == 'user' %}
+                <a href="/user/pemesanan" class="btn-hero-secondary">Pesan Sekarang</a>
+                {% else %}
+                <a href="/login" class="btn-hero-secondary">Pesan Sekarang</a>
+                {% endif %}
+            </div>
+
+            <div class="hero-image">
+                <div class="hero-icon-card">
+                    <div class="hero-icon">🏠</div>
+                    <div class="hero-icon-title">Penitipan</div>
+                    <div class="hero-icon-desc">Fasilitas nyaman & aman</div>
+                </div>
+                <div class="hero-icon-card">
+                    <div class="hero-icon">❤️</div>
+                    <div class="hero-icon-title">Adopsi</div>
+                    <div class="hero-icon-desc">Temukan teman baru</div>
+                </div>
+                <div class="hero-icon-card">
+                    <div class="hero-icon">💝</div>
+                    <div class="hero-icon-title">Donasi</div>
+                    <div class="hero-icon-desc">Bantu hewan terlantar</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="layanan">
+        <div class="features-container">
+            <div class="section-header">
+                <div class="section-badge">Layanan Kami</div>
+                <h2 class="section-title">Mengapa Memilih PetCare?</h2>
+                <p class="section-subtitle">
+                    Kami memberikan pelayanan terbaik dengan dedikasi penuh untuk kesejahteraan hewan peliharaan Anda
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛏️</div>
+                    <h3 class="feature-title">Penitipan Nyaman</h3>
+                    <p class="feature-desc">
+                        Fasilitas penitipan modern dengan ruangan ber-AC, tempat tidur empuk, dan area bermain yang luas untuk hewan kesayangan Anda.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3 class="feature-title">Perawatan Profesional</h3>
+                    <p class="feature-desc">
+                        Tim dokter hewan dan perawat berpengalaman siap memberikan perawatan kesehatan terbaik 24/7 untuk hewan peliharaan Anda.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🐕</div>
+                    <h3 class="feature-title">Program Adopsi</h3>
+                    <p class="feature-desc">
+                        Bantu hewan terlantar menemukan keluarga baru yang penuh kasih sayang melalui program adopsi kami yang terpercaya.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Monitoring Real-time</h3>
+                    <p class="feature-desc">
+                        Pantau kondisi hewan peliharaan Anda secara real-time melalui aplikasi dan dapatkan update rutin dari tim kami.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🍖</div>
+                    <h3 class="feature-title">Makanan Berkualitas</h3>
+                    <p class="feature-desc">
+                        Makanan premium dan bergizi sesuai kebutuhan setiap hewan, dengan menu yang dapat disesuaikan dengan permintaan Anda.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3 class="feature-title">Terpercaya & Bersertifikat</h3>
+                    <p class="feature-desc">
+                        Bersertifikat resmi dengan ribuan pelanggan puas dan rating 4.9/5. Kepercayaan Anda adalah prioritas kami.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-container">
+            <h2 class="cta-title">Siap Mempercayakan Hewan Kesayangan Anda?</h2>
+            <p class="cta-subtitle">
+                Daftar sekarang dan dapatkan diskon 20% untuk penitipan pertama Anda!
+            </p>
+            {% if session.get('role') %}
+            <a href="{% if session.get('role') == 'admin' %}/admin/dashboard{% else %}/user/dashboard{% endif %}" class="btn-cta">Dashboard →</a>
+            {% else %}
+            <a href="/login" class="btn-cta">Daftar Sekarang →</a>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">🐾</div>
+            <h3 class="footer-title">PetCare</h3>
+            <div class="footer-links">
+                <a href="#home">Beranda</a>
+                <a href="#layanan">Layanan</a>
+                <a href="#tentang">Tentang Kami</a>
+                <a href="#kontak">Kontak</a>
+                {% if session.get('role') == 'admin' %}
+                <a href="/admin/dashboard">Dashboard</a>
+                {% elif session.get('role') == 'user' %}
+                <a href="/user/dashboard">User Dashboard</a>
+                {% else %}
+                <a href="/login">Masuk</a>
+                {% endif %}
+            </div>
+            <div class="footer-copyright">
+                © 2026 PetCare. Semua hak dilindungi. Dibuat dengan ❤️ untuk hewan kesayangan Anda.
+            </div>
+        </div>
+    </footer>
+
+<script>
+    // Smooth scroll untuk semua anchor link
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Hitung offset untuk memperhitungkan navbar fixed
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL hash
+                history.pushState(null, null, targetId);
+            }
+        });
+    });
+
+    // Handle scroll untuk navbar shadow dan spacing
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        const heroSection = document.querySelector('.hero');
+        
+        // Tambah shadow pada navbar saat scroll
+        if (window.scrollY > 10) {
+            navbar.style.boxShadow = 'var(--shadow-md)';
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+            navbar.style.boxShadow = 'var(--shadow-sm)';
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+        
+        // Atur padding top untuk hero section berdasarkan tinggi navbar
+        if (heroSection) {
+            const navbarHeight = navbar.offsetHeight;
+            heroSection.style.marginTop = navbarHeight + 'px';
+        }
+    });
+
+    // Inisialisasi saat halaman load
+    document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar');
+        const heroSection = document.querySelector('.hero');
+        
+        // Set initial margin for hero section
+        if (heroSection) {
+            const navbarHeight = navbar.offsetHeight;
+            heroSection.style.marginTop = navbarHeight + 'px';
+        }
+        
+        // Handle hash URL saat page load
+        if (window.location.hash) {
+            const targetId = window.location.hash;
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                setTimeout(() => {
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
+        }
+    });
+
+    // Tambahan: Animasi fade in untuk section yang terlihat
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Terapkan animasi pada semua section
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        observer.observe(section);
+    });
+</script>
+
+</body>
+</html>

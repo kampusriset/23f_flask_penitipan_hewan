@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Pet Care</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar_admin.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Main Content */
+        .main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .topbar-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            background: rgba(255, 182, 217, 0.2);
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+
+        /* Stats Cards */
+        .counter-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .counter-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #ff7bb9, #ffb6d9);
+        }
+
+        .counter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .counter-card h3 {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .counter-card p {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent-dark);
+            line-height: 1.2;
+        }
+
+        .chart-section {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .chart-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .export-section {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-export {
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-excel {
+            background: #1d6f42;
+        }
+
+        .btn-pdf {
+            background: #c0392b;
+        }
+
+        .btn-export:hover {
+            opacity: 0.85;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                margin-left: 240px;
+                padding: 20px 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .counter-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<script>
+setInterval(() => {
+    location.reload();
+}, 20000);
+</script>
+
+<body class="dashboard-bg">
+
+{% set active_page = 'dashboard' %}
+{% include 'admin/sidebar_admin.html' %}
+
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">Admin Dashboard</h1>
+        <div class="date">{{ today }}</div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="counter-section">
+        <div class="counter-card">
+            <h3>Total Reservasi</h3>
+            <p>{{ total_reservasi }}</p>
+        </div>
+
+        <div class="counter-card">
+            <h3>Menunggu</h3>
+            <p>{{ reservasi_menunggu }}</p>
+        </div>
+
+        <div class="counter-card">
+            <h3>Selesai</h3>
+            <p>{{ reservasi_selesai }}</p>
+        </div>
+
+        <div class="counter-card">
+            <h3>Total User</h3>
+            <p>{{ total_user }}</p>
+        </div>
+    </section>
+
+    <section class="export-section">
+        <a href="{{ url_for('export_reservasi_excel') }}" class="btn-export btn-excel">
+            📊 Export Excel
+        </a>
+        <a href="{{ url_for('export_reservasi_pdf') }}" class="btn-export btn-pdf">
+            📄 Export PDF
+        </a>
+    </section>
+
+    <section class="chart-section">
+        <h2 class="chart-title">Statistik Reservasi</h2>
+        <canvas id="reservasiChart"></canvas>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('reservasiChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Menunggu', 'Selesai'],
+        datasets: [{
+            label: 'Jumlah Reservasi',
+            data: [
+                parseInt('{{ reservasi_menunggu }}'),
+                parseInt('{{ reservasi_selesai }}')
+            ],
+            backgroundColor: ['#ffb3d9','#ff4da6']
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        }
+    }
+});
+</script>
+
+</body>
+</html>

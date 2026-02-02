@@ -1,0 +1,31 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="logo">🐾</div>
+        <h2>PetCare User</h2>
+        <p class="small">Panel Pengguna</p>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('user_dashboard') }}" {% if active_page == 'dashboard' %}class="active"{% endif %}>
+            <span>📊</span> Dashboard
+        </a>
+        <a href="{{ url_for('user_profil') }}" {% if active_page == 'profil' %}class="active"{% endif %}>
+            <span>👤</span> Info Profil
+        </a>
+        <a href="{{ url_for('user_pesan') }}" {% if active_page == 'pesan' %}class="active"{% endif %}>
+            <span>💬</span> Pesan Masuk
+        </a>
+        <a href="{{ url_for('user_pemesanan') }}" {% if active_page == 'pemesanan' %}class="active"{% endif %}>
+            <span>📋</span> Pemesanan
+        </a>
+        <a href="{{ url_for('home') }}" {% if active_page == 'home' %}class="active"{% endif %}>
+            <span>🏠</span> Kembali ke Home
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="user">👤 {{ session.get('nama', 'User') }}</div>
+        <a href="{{ url_for('user_logout') }}" class="btn-logout">Logout</a>
+    </div>
+</div>

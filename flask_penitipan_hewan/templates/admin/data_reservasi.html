@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Reservasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar_admin.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Main Content */
+        .main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .topbar-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            background: rgba(255, 182, 217, 0.2);
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                margin-left: 240px;
+                padding: 20px 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-bg">
+
+{% set active_page = 'reservasi' %}
+{% include 'admin/sidebar_admin.html' %}
+
+<div class="main">
+
+    <header class="topbar">
+        <h1>Data Reservasi User</h1>
+    </header>
+
+    <section class="table-wrap">
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Pemilik</th>
+                    <th>Hewan</th>
+                    <th>Jenis Hewan</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+
+           <tbody>
+    {% if data %}
+        {% for r in data %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ r.nama_pemilik }}</td>
+            <td>{{ r.nama_hewan }}</td>
+            <td>{{ r.jenis }}</td>
+            <td>{{ r.check_in }}</td>
+            <td>{{ r.check_out }}</td>
+
+            <td>
+                <span class="badge badge-blue">{{ r.status }}</span>
+            </td>
+
+            <td>
+                <div class="btn-group">
+                    {% if r.status == "Menunggu" %}
+                    <a href="{{ url_for('admin_reservasi_terima', id=r.id) }}"
+                    class="btn-green">
+                Terima
+            </a>
+            <a href="{{ url_for('admin_reservasi_tolak', id=r.id) }}"
+            class="btn-yellow"
+            onclick="return confirm('Yakin menolak reservasi ini?')">
+            Tolak
+            </a>
+            {% endif %}
+
+        <a href="{{ url_for('admin_reservasi_hapus', id=r.id) }}"
+           class="btn-red"
+           onclick="return confirm('Hapus reservasi ini?')">
+            Hapus
+        </a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="8" class="empty-msg">
+                Belum ada reservasi masuk
+            </td>
+        </tr>
+    {% endif %}
+</tbody>
+
+        </table>
+
+    </section>
+
+</div>
+</body>
+</html>

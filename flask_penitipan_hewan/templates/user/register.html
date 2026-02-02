@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login - PetCare</title>
+    <title>Register User</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -15,7 +15,7 @@
             <div class="logo">🐾</div>
             <div class="brand-text">
                 <h1>PetCare</h1>
-                <p class="small">Masuk ke Akun Anda</p>
+                <p class="small">Buat Akun User</p>
             </div>
         </div>
 
@@ -30,19 +30,22 @@
         {% endwith %}
 
         <form method="POST" class="form">
+            <label>Nama</label>
+            <input type="text" name="nama" placeholder="Nama" required>
+
             <label>Email</label>
             <input type="email" name="email" placeholder="Email" required>
 
             <label>Password</label>
             <input type="password" name="password" placeholder="Password" required>
 
-            <button type="submit" class="btn-primary">Masuk</button>
+            <button type="submit" class="btn-primary">Daftar</button>
         </form>
 
         <p style="margin-top:18px;font-size:14px;text-align:center;">
-            Belum punya akun?
-            <a href="/user/register" style="color:#ff4da6;font-weight:600;">
-                Daftar di sini
+            Sudah punya akun?
+            <a href="{{ url_for('login') }}" style="color:#ff4da6;font-weight:600;">
+                Login di sini
             </a>
         </p>
 

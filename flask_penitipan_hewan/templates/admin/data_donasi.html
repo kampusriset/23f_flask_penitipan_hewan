@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Data Donasi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebar_admin.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Main Content */
+        .main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .topbar-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            background: rgba(255, 182, 217, 0.2);
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main {
+                margin-left: 240px;
+                padding: 20px 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-bg">
+
+{% set active_page = 'donasi' %}
+{% include 'admin/sidebar_admin.html' %}
+
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">💖 Data Donasi</h1>
+    </header>
+
+    <div class="table-wrap">
+        {% if donasi %}
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Telp</th>
+                    <th>Jumlah</th>
+                    <th>Metode</th>
+                    <th>Bukti Transfer</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in donasi %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row.nama }}</td>
+                    <td>{{ row.email }}</td>
+                    <td>{{ row.telp }}</td>
+                    <td><span class="badge badge-green">Rp {{ row.jumlah }}</span></td>
+                    <td>{{ row.metode }}</td>
+                    <td>
+                        {% if row.bukti_transfer %}
+                            <a href="{{ url_for('static', filename='uploads/' + row.bukti_transfer) }}" target="_blank">
+                                <img src="{{ url_for('static', filename='uploads/' + row.bukti_transfer) }}" alt="Bukti Transfer" style="max-width: 100px; max-height: 100px;">
+                            </a>
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>{{ row.created_at }}</td>
+                    <td>
+                        {% if row.status == 'Diterima' %}
+                            <span class="badge badge-green">{{ row.status }}</span>
+                        {% elif row.status == 'Menunggu' %}
+                            <span class="badge badge-yellow">{{ row.status }}</span>
+                        {% else %}
+                            <span class="badge badge-red">{{ row.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="aksi-col">
+                        <div class="btn-group">
+                            {% if row.status != 'Diterima' %}
+                            <a href="{{ url_for('admin_donasi_terima', id=row.id) }}" class="btn-green">
+                                Terima
+                            </a>
+                            {% endif %}
+                            <a href="{{ url_for('donasi_hapus', id=row.id) }}"
+                               class="btn-red"
+                               onclick="return confirm('Yakin hapus data donasi ini?')">
+                               Hapus
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="empty-msg">Belum ada data donasi</div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>

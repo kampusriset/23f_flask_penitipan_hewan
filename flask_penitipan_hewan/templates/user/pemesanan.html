@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care | Pemesanan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/pemesanan.css">
+    <style>
+        body {
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body class="pemesanan-page">
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="navbar-brand">
+                <div class="navbar-logo">🐾</div>
+                <div class="navbar-title">PetCare</div>
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="{{ url_for('user_pemesanan') }}">Pemesanan</a></li>
+                <li><a href="#pets">Pets</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('user_dashboard') }}" class="btn-nav">Dashboard</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Say Hello To Your New Buddy</h1>
+            <p>
+                Pet Care adalah rumah kedua bagi hewan kesayangan Anda.
+                Kami menjaga mereka dengan penuh cinta dan perhatian.
+            </p>
+            <a href="{{ url_for('user_reservasi') }}" class="hero-btn">Buat Reservasi</a>
+        </div>
+    </section>
+
+    <!-- Icon Section -->
+    <section class="icon-section">
+        <a href="{{ url_for('user_adopsi') }}" class="icon-card">
+            <img src="/static/images/paw.jpg" alt="Adopsi">
+            <p>Adopsi</p>
+        </a>
+        <a href="{{ url_for('user_donasi') }}" class="icon-card">
+            <img src="/static/images/donate.jpg" alt="Donasi">
+            <p>Donasi</p>
+        </a>
+        <a href="{{ url_for('user_sukarelawan') }}" class="icon-card">
+            <img src="/static/images/volunteer.jpg" alt="Sukarelawan">
+            <p>Sukarelawan</p>
+        </a>
+    </section>
+
+    <!-- Pets Section -->
+    <section class="section" id="pets">
+        <h2>Hewan Kesayangan Kami</h2>
+        <small>Dirawat dengan penuh cinta 💕</small>
+        <div class="pet-grid">
+            <div class="pet-card">
+                <img src="/static/images/pet1.jpg" alt="Milo">
+                <p>Milo</p>
+            </div>
+            <div class="pet-card">
+                <img src="/static/images/pet2.jpg" alt="Snow">
+                <p>Snow</p>
+            </div>
+            <div class="pet-card">
+                <img src="/static/images/pet3.jpg" alt="Luna">
+                <p>Luna</p>
+            </div>
+            <div class="pet-card">
+                <img src="/static/images/pet4.jpg" alt="Oreo">
+                <p>Oreo</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <h2>Our Journey In Numbers</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <img src="/static/images/lucu7.jpg" alt="Cats">
+                <h3>20</h3>
+                <p>Cats</p>
+            </div>
+            <div class="stat-card">
+                <img src="/static/images/lucu2.jpg" alt="Dogs">
+                <h3>15</h3>
+                <p>Dogs</p>
+            </div>
+            <div class="stat-card">
+                <img src="/static/images/lucu5.jpg" alt="Adopted">
+                <h3>19</h3>
+                <p>Adopted</p>
+            </div>
+            <div class="stat-card">
+                <img src="/static/images/lucu6.jpg" alt="Rooms">
+                <h3>20</h3>
+                <p>Rooms</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">🐾</div>
+            <h3 class="footer-title">PetCare</h3>
+            <div class="footer-links">
+                <a href="{{ url_for('home') }}">Beranda</a>
+                <a href="#pets">Pets</a>
+                {% if session.get('role') == 'admin' %}
+                <a href="/admin/dashboard">Dashboard</a>
+                {% elif session.get('role') == 'user' %}
+                <a href="/user/dashboard">Dashboard</a>
+                {% else %}
+                <a href="/login">Masuk</a>
+                {% endif %}
+            </div>
+            <div class="footer-copyright">
+                © 2026 PetCare. Semua hak dilindungi. Dibuat dengan ❤️ untuk hewan kesayangan Anda.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll untuk navigasi
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tambahkan padding untuk navbar fixed
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            document.querySelector('.hero').style.marginTop = navbarHeight + 'px';
+
+            // Smooth scroll untuk link "Pets"
+            const petsLink = document.querySelector('a[href="#pets"]');
+            if (petsLink) {
+                petsLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const petsSection = document.getElementById('pets');
+                    if (petsSection) {
+                        window.scrollTo({
+                            top: petsSection.offsetTop - navbarHeight - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            }
+
+            // Pastikan halaman bisa di-scroll
+            document.body.style.overflowY = 'auto';
+            document.documentElement.style.overflowY = 'auto';
+        });
+
+        // Adjust margin on resize
+        window.addEventListener('resize', function() {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            document.querySelector('.hero').style.marginTop = navbarHeight + 'px';
+        });
+    </script>
+</body>
+</html>

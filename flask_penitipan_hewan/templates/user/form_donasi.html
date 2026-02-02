@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Donasi | PetCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sidebar-bg: #ff88c8;
+            --sidebar-hover: #ff1584;
+            --bg: linear-gradient(135deg, #ffd1e8 0%, #f7c3db 40%, #ffc7e0 70%, #fff6fb 100%);
+            --card: #ffffff;
+            --glass: rgba(255,255,255,0.75);
+            --text: #5a2d4a;
+            --muted: #9a376b;
+            --accent-dark: #8b2f5f;
+            --shadow-sm: 0 4px 12px rgba(255, 0, 128, 0.15);
+            --shadow-md: 0 8px 20px rgba(255, 0, 128, 0.2);
+            --shadow-lg: 0 12px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 25s infinite linear;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(25px);
+            padding: 50px 45px;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ffe6f2, #ffd6ea);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ff7bb9;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--accent-dark);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #ffe6f2;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            color: var(--text);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff7bb9;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 123, 185, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #c9a3b8;
+            font-weight: 400;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239a376b' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+        }
+
+        /* Donation Amount Buttons */
+        .amount-quick {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .amount-btn {
+            background: white;
+            border: 2px solid #ffe6f2;
+            padding: 14px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .amount-btn:hover {
+            background: linear-gradient(135deg, #ffe6f2, #ffd6ea);
+            border-color: #ff7bb9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .amount-btn.active {
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+            color: white;
+            border-color: #ff4da6;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button[type="submit"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button[type="submit"]:hover::before {
+            left: 100%;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(-1px);
+        }
+
+        .back {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 182, 217, 0.3);
+        }
+
+        .back a {
+            text-decoration: none;
+            color: var(--accent-dark);
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+
+        .back a:hover {
+            background: rgba(255, 123, 185, 0.1);
+            color: #ff4da6;
+            transform: translateX(-5px);
+        }
+
+        /* Flash Messages */
+        .flash-wrap {
+            margin-bottom: 25px;
+        }
+
+        .flash {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .flash.success {
+            background: rgba(255, 225, 241, 0.9);
+            color: #9c0f59;
+            border-left-color: #ff7bb9;
+        }
+
+        .flash.error {
+            background: rgba(255, 214, 228, 0.9);
+            color: #b80055;
+            border-left-color: #ff4da6;
+        }
+
+        .flash.info {
+            background: rgba(230, 255, 230, 0.9);
+            color: #1c7d3a;
+            border-left-color: #4CAF50;
+        }
+
+        /* Form Hints */
+        .form-hint {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        /* Required indicator */
+        label.required::after {
+            content: '*';
+            color: #ff4da6;
+            margin-left: 4px;
+        }
+
+        /* Input with prefix */
+        .input-group {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .input-group input {
+            padding-left: 42px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .form-icon {
+                font-size: 52px;
+            }
+
+            .amount-quick {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            .container {
+                padding: 35px 25px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .form-icon {
+                font-size: 48px;
+            }
+
+            input, textarea, select {
+                padding: 12px 14px;
+                font-size: 14px;
+            }
+
+            .amount-quick {
+                grid-template-columns: 1fr;
+            }
+
+            button[type="submit"] {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 182, 217, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ffb6d9, #ff7bb9);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-header">
+        <div class="form-icon">💝</div>
+        <h2>Form Donasi</h2>
+        <p class="form-subtitle">Bantu hewan terlantar menemukan kehidupan yang lebih baik</p>
+    </div>
+
+    <div class="info-box">
+        <h3>💖 Mengapa Donasi Penting?</h3>
+        <p>Setiap donasi Anda membantu kami menyediakan makanan, perawatan kesehatan, dan tempat tinggal yang layak untuk hewan-hewan yang membutuhkan.</p>
+    </div>
+
+    <!-- Flash Messages (if any) -->
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('user_donasi') }}" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label class="required">Nama Lengkap</label>
+            <input type="text" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Email</label>
+            <input type="email" name="email" placeholder="nama@email.com" required>
+            <div class="form-hint">Konfirmasi donasi akan dikirim ke email ini</div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">No. Telepon</label>
+            <input type="tel" name="telp" placeholder="08xxxxxxxxxx" required>
+            <div class="form-hint">Format: 08xxxxxxxxxx (10-13 digit)</div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Jumlah Donasi</label>
+            <div class="amount-quick">
+                <div class="amount-btn" onclick="setAmount(50000)">Rp 50.000</div>
+                <div class="amount-btn" onclick="setAmount(100000)">Rp 100.000</div>
+                <div class="amount-btn" onclick="setAmount(250000)">Rp 250.000</div>
+            </div>
+            <div class="input-group">
+                <span class="input-prefix">Rp</span>
+                <input type="number" id="jumlah" name="jumlah" min="10000" placeholder="Masukkan nominal donasi" required>
+            </div>
+            <div class="form-hint">Minimal donasi Rp 10.000</div>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Metode Donasi</label>
+            <select name="metode" required>
+                <option value="">-- Pilih Metode Pembayaran --</option>
+                <option value="Transfer Bank">Transfer Bank (BCA, Mandiri, BNI)</option>
+                <option value="E-Wallet">E-Wallet (GoPay, OVO, DANA)</option>
+                <option value="QRIS">QRIS</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="required">Bukti Transfer</label>
+            <input type="file" name="bukti_transfer" accept="image/*" required>
+            <div class="form-hint">Upload gambar bukti transfer (PNG, JPG, JPEG, GIF)</div>
+        </div>
+
+        <button type="submit">💖 Kirim Donasi Sekarang</button>
+    </form>
+
+    <div class="back">
+        <a href="{{ url_for('user_pemesanan') }}">← Kembali ke Pemesanan</a>
+    </div>
+</div>
+
+<script>
+    function setAmount(amount) {
+        document.getElementById('jumlah').value = amount;
+        
+        // Remove active class from all buttons
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        event.target.classList.add('active');
+    }
+
+    // Format number input
+    const jumlahInput = document.getElementById('jumlah');
+    jumlahInput.addEventListener('input', function(e) {
+        // Remove active state from quick amount buttons if user types manually
+        if (e.target.value) {
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

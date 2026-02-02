@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profil Admin - PetCare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sidebar-bg: #ff88c8;
+            --sidebar-hover: #ff1584;
+            --bg: linear-gradient(135deg, #ffd1e8 0%, #f7c3db 40%, #ffc7e0 70%, #fff6fb 100%);
+            --card: #ffffff;
+            --glass: rgba(255,255,255,0.75);
+            --text: #5a2d4a;
+            --muted: #9a376b;
+            --accent-dark: #8b2f5f;
+            --shadow-sm: 0 4px 12px rgba(255, 0, 128, 0.15);
+            --shadow-md: 0 8px 20px rgba(255, 0, 128, 0.2);
+            --shadow-lg: 0 12px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            background-attachment: fixed;
+        }
+
+        .dashboard-bg {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-lg);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff4da6, #ff7bb9, #ffb6d9);
+        }
+
+        .sidebar-top {
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        .sidebar h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sidebar .small {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .menu {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 16px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            background: rgba(255,255,255,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--sidebar-hover), transparent);
+            transition: left 0.5s;
+        }
+
+        .menu a:hover::before {
+            left: 100%;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: rgba(255,255,255,0.22);
+            box-shadow: 0 10px 25px rgba(255, 80, 150, 0.35);
+            transform: translateX(5px);
+        }
+
+        .sidebar-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .user {
+            font-size: 14px;
+            color: white;
+            font-weight: 500;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #ff4da6, #ff2a92);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            display: block;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Main Content */
+        .main {
+            flex-grow: 1;
+            padding: 30px 40px;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .topbar-title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ba2f78, #ff4da6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 500;
+            background: rgba(255, 182, 217, 0.2);
+            padding: 8px 16px;
+            border-radius: 10px;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: var(--card);
+            padding: 35px;
+            border-radius: 22px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            border: 5px solid #ffe6f2;
+            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, #ffe6f2, #ffd6ea);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .avatar-upload input[type="file"] {
+            display: none;
+        }
+
+        .btn-upload {
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-upload:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-bottom: 8px;
+        }
+
+        .profile-role {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, #ffe6f2, #ffd6ea);
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-dark);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: var(--card);
+            padding: 35px;
+            border-radius: 22px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .form-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 182, 217, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--accent-dark);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #ffe6f2;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            color: var(--text);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff7bb9;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 123, 185, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #c9a3b8;
+            font-weight: 400;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239a376b' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 45px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        label.required::after {
+            content: '*';
+            color: #ff4da6;
+            margin-left: 4px;
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 182, 217, 0.3);
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: white;
+            color: var(--accent-dark);
+            padding: 16px;
+            border: 2px solid #ffe6f2;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 182, 217, 0.1);
+            border-color: #ff7bb9;
+            transform: translateY(-2px);
+        }
+
+        /* Flash Messages */
+        .flash-wrap {
+            margin-bottom: 25px;
+        }
+
+        .flash {
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .flash.success {
+            background: rgba(255, 225, 241, 0.9);
+            color: #9c0f59;
+            border-left-color: #ff7bb9;
+        }
+
+        .flash.error {
+            background: rgba(255, 214, 228, 0.9);
+            color: #b80055;
+            border-left-color: #ff4da6;
+        }
+
+        .flash.info {
+            background: rgba(230, 255, 230, 0.9);
+            color: #1c7d3a;
+            border-left-color: #4CAF50;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+
+            .main {
+                margin-left: 240px;
+                padding: 20px 25px;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 15px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .topbar-title {
+                font-size: 28px;
+            }
+
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 182, 217, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ffb6d9, #ff7bb9);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff7bb9, #ff4da6);
+        }
+    </style>
+</head>
+
+<body class="dashboard-bg">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="logo">🐾</div>
+        <h2>PetCare Board</h2>
+        <p class="small">Manajemen Penitipan</p>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('admin_dashboard') }}">
+            <span>📊</span> Dashboard
+        </a>
+        <a href="{{ url_for('admin_reservasi') }}">
+            <span>📅</span> Data Reservasi
+        </a>
+        <a href="{{ url_for('admin_adopsi') }}">
+            <span>🐾</span> Data Adopsi
+        </a>
+        <a href="{{ url_for('admin_data_donasi') }}">
+            <span>💝</span> Data Donasi
+        </a>
+        <a href="{{ url_for('admin_sukarelawan') }}">
+            <span>🤝</span> Data Sukarelawan
+        </a>
+        <a href="{{ url_for('pengaturan') }}" class="active">
+            <span>⚙️</span> Pengaturan
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="user">👤 {{ session.get('email', 'Admin') }}</div>
+        <a href="{{ url_for('admin_logout') }}" class="btn-logout">Logout</a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">Edit Profil Admin</h1>
+        <div class="date">{{ today }}</div>
+    </header>
+
+    <!-- Flash Messages -->
+    {% if messages %}
+    <div class="flash-wrap">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+
+        <!-- Profile Card -->
+        <div class="profile-card">
+            <div class="profile-avatar">
+                👤
+            </div>
+
+            <div class="profile-name">{{ admin.nama or 'Admin Name' }}</div>
+            <div class="profile-role">{{ admin.email or 'admin@email.com' }}</div>
+
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">Admin</div>
+                    <div class="stat-label">Role</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Active</div>
+                    <div class="stat-label">Status</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="form-card">
+            <h2>✏️ Edit Informasi Profil</h2>
+
+            <form method="POST" action="{{ url_for('pengaturan') }}" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="update_profile">
+
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3>Informasi Pribadi</h3>
+
+                    <div class="form-group">
+                        <label class="required">Nama Lengkap</label>
+                        <input type="text" name="nama" value="{{ admin.nama or '' }}" placeholder="Masukkan nama lengkap" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="required">Email</label>
+                            <input type="email" name="email" value="{{ admin.email or '' }}" placeholder="nama@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>No. Telepon</label>
+                            <input type="tel" name="telp" value="{{ admin.telp or '' }}" placeholder="08xxxxxxxxxx">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" value="{{ admin.tanggal_lahir or '' }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <textarea name="alamat" placeholder="Masukkan alamat lengkap">{{ admin.alamat or '' }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="form-section">
+                    <h3>Ubah Password</h3>
+
+                    <div class="form-group">
+                        <label>Password Lama</label>
+                        <input type="password" name="password_lama" placeholder="Kosongkan jika tidak ingin mengubah password">
+                        <div class="form-hint">Isi hanya jika ingin mengubah password</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password" name="password_baru" placeholder="Masukkan password baru">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <input type="password" name="password_konfirmasi" placeholder="Konfirmasi password baru">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="form-section">
+                    <h3>Informasi Tambahan</h3>
+
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea name="bio" placeholder="Ceritakan sedikit tentang Anda" rows="4">{{ admin.bio or '' }}</textarea>
+                        <div class="form-hint">Maksimal 200 karakter</div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">💾 Simpan Perubahan</button>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary">❌ Batal</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // Form validation
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        const passwordLama = document.querySelector('input[name="password_lama"]').value;
+        const passwordBaru = document.querySelector('input[name="password_baru"]').value;
+        const passwordKonfirmasi = document.querySelector('input[name="password_konfirmasi"]').value;
+
+        // If changing password
+        if (passwordLama || passwordBaru || passwordKonfirmasi) {
+            if (!passwordLama) {
+                e.preventDefault();
+                alert('Masukkan password lama untuk mengubah password!');
+                return;
+            }
+            if (passwordBaru !== passwordKonfirmasi) {
+                e.preventDefault();
+                alert('Password baru dan konfirmasi password tidak cocok!');
+                return;
+            }
+            if (passwordBaru.length < 6) {
+                e.preventDefault();
+                alert('Password baru minimal 6 karakter!');
+                return;
+            }
+        }
+
+        // Bio character limit
+        const bio = document.querySelector('textarea[name="bio"]').value;
+        if (bio.length > 200) {
+            e.preventDefault();
+            alert('Bio maksimal 200 karakter!');
+            return;
+        }
+    });
+
+    // Bio character counter
+    const bioTextarea = document.querySelector('textarea[name="bio"]');
+    if (bioTextarea) {
+        const bioHint = bioTextarea.nextElementSibling;
+
+        bioTextarea.addEventListener('input', function() {
+            const length = this.value.length;
+            bioHint.textContent = `${length}/200 karakter`;
+
+            if (length > 200) {
+                bioHint.style.color = '#ff4da6';
+                bioHint.style.fontWeight = '700';
+            } else {
+                bioHint.style.color = '';
+                bioHint.style.fontWeight = '';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

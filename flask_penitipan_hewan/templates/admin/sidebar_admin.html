@@ -1,0 +1,34 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="logo">🐾</div>
+        <h2>PetCare Board</h2>
+        <p class="small">Manajemen Penitipan</p>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('admin_dashboard') }}" {% if active_page == 'dashboard' %}class="active"{% endif %}>
+            <span>📊</span> Dashboard
+        </a>
+        <a href="{{ url_for('admin_reservasi') }}" {% if active_page == 'reservasi' %}class="active"{% endif %}>
+            <span>📅</span> Data Reservasi
+        </a>
+        <a href="{{ url_for('admin_adopsi') }}" {% if active_page == 'adopsi' %}class="active"{% endif %}>
+            <span>🐾</span> Data Adopsi
+        </a>
+        <a href="{{ url_for('admin_data_donasi') }}" {% if active_page == 'donasi' %}class="active"{% endif %}>
+            <span>💝</span> Data Donasi
+        </a>
+        <a href="{{ url_for('admin_sukarelawan') }}" {% if active_page == 'sukarelawan' %}class="active"{% endif %}>
+            <span>🤝</span> Data Sukarelawan
+        </a>
+        <a href="{{ url_for('pengaturan') }}" {% if active_page == 'pengaturan' %}class="active"{% endif %}>
+            <span>⚙️</span> Pengaturan
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="user">👤 {{ session.get('email', 'Admin') }}</div>
+        <a href="{{ url_for('admin_logout') }}" class="btn-logout">Logout</a>
+    </div>
+</div>

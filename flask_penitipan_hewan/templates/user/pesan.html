@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pesan Masuk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_sidebar.css') }}">
+</head>
+
+<body class="dashboard-bg">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="logo">🐾</div>
+        <h2>PetCare User</h2>
+        <p class="small">Panel Pengguna</p>
+    </div>
+
+    <nav class="menu">
+        <a href="{{ url_for('user_dashboard') }}">
+            <span>📊</span> Dashboard
+        </a>
+        <a href="{{ url_for('user_profil') }}">
+            <span>👤</span> Info Profil
+        </a>
+        <a href="{{ url_for('user_pesan') }}" class="active">
+            <span>💬</span> Pesan Masuk
+        </a>
+        <a href="{{ url_for('user_pemesanan') }}">
+            <span>📋</span> Pemesanan
+        </a>
+        <a href="{{ url_for('home') }}">
+            <span>🏠</span> Kembali ke Home
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="user">👤 {{ session.get('nama', 'User') }}</div>
+        <a href="{{ url_for('user_logout') }}" class="btn-logout">Logout</a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+    <header class="topbar">
+        <h1 class="topbar-title">📩 Pesan Masuk</h1>
+    </header>
+
+    <div class="table-wrap">
+        {% if data %}
+            {% for p in data %}
+            <div class="message-card">
+                <h3>{{ p.judul }}</h3>
+                <div class="msg-time">{{ p.created_at }}</div>
+                <div class="msg-body">{{ p.isi }}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-msg">Belum ada pesan masuk</div>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>
