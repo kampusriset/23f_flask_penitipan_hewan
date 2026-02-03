@@ -1,0 +1,10 @@
+def perkenalan (nama, nim, peran):
+    print ("Perkenalkan, Saya ", nama)
+    print ("NIM : ", nim)
+    print ("Peran saya yaitu : ", peran)
+    
+if __name__ == "__main__":
+    nama = "Fauzi Diana Pertiwi"
+    nim = "2313010532"
+    peran = "Membantu coding, mengerjakan flowchart, edit video dan upload youtube"
+    perkenalan(nama, nim, peran)
